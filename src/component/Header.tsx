@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
+import logo from "../images/logo.svg";
 import iconShopping from "../images/icon-shopping.svg";
 
-const Header: FC<any> = ({ logo, cartList, setIsOpen }) => {
+const Header: FC<any> = ({ cartList, setIsOpen }) => {
     return (
         <div className="app-header shadow-lg w-full">
             <div className="flex items-center gap-1">

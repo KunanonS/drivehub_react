@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Menu } from '@headlessui/react';
 
 import iconDropdown from "../images/icon-dropdown.svg";

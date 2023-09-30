@@ -6,8 +6,6 @@ import CarItem from "./component/CarItem";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 
-import logo from "./images/logo.svg";
-
 import "./index.css";
 import "./App.css";
 
@@ -32,7 +30,7 @@ function App() {
 
   return (
     <div className="text-[#111827]">
-      <Header logo={logo} cartList={cartList} setIsOpen={setIsOpen} />
+      <Header cartList={cartList} setIsOpen={setIsOpen} />
       <CarSearchBar
         menuActive={menuActive}
         handleChangeSearchCar={handleChangeSearchCar}
