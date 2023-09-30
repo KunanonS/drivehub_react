@@ -1,0 +1,31 @@
+.app-footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: #0073fa;
+  color: #fff;
+  text-align: center;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.app-header {
+  background: #0073fa;
+  color: #fff;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+}
+.app-header img {
+  height: 50px;
+}
+.app-header span {
+  font-size: 30px;
+  font-weight: 600;
+}
