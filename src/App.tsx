@@ -11,12 +11,6 @@ import logo from "./images/logo.svg";
 import "./index.css";
 import "./App.css";
 
-const menuList = [
-  { value: 'asc', name: 'Price: Low - High' },
-  { value: 'desc', name: 'Price: High - Low' },
-]
-
-
 function App() {
   const {
     carList,
@@ -43,7 +37,6 @@ function App() {
         menuActive={menuActive}
         handleChangeSearchCar={handleChangeSearchCar}
         handleSortPrice={handleSortPrice}
-        menuList={menuList}
       />
       <div className="bg-[#F3F4F6] px-10 py-5">
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">

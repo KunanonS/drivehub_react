@@ -4,7 +4,12 @@ import { Menu } from '@headlessui/react';
 import iconDropdown from "../images/icon-dropdown.svg";
 import iconArrowDown from "../images/icon-arrow-down.svg";
 
-const CarSearchBar: FC<any> = ({ menuActive, handleChangeSearchCar, handleSortPrice, menuList }) => {
+const menuList = [
+    { value: 'asc', name: 'Price: Low - High' },
+    { value: 'desc', name: 'Price: High - Low' },
+  ]
+
+const CarSearchBar: FC<any> = ({ menuActive, handleChangeSearchCar, handleSortPrice }) => {
     return (
         <div className="block md:flex justify-between px-10 py-3">
             <div className="text-2xl md:text-3xl font-semibold">Car Available</div>
