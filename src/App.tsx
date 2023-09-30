@@ -1,10 +1,10 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
 import { Dialog, Transition } from '@headlessui/react'
 
 import { cartListState } from './store/recoil/atoms/common'
 
-import { Car, CarInCart } from "./types/common";
+import { Car, CarInCart, DiscountCode } from "./types/common";
 
 import logo from "./images/logo.svg";
 import iconNullImage from "./images/icon-null-image.svg";
@@ -19,11 +19,45 @@ const discountListApi = 'https://cdn.contentful.com/spaces/vveq832fsd73/entries?
 
 const AccessToken = 'VPmo2U661gTnhMVx0pc0-CtahNg_aqS5DuneLtYfO1o';
 
-function App() {
+function App() {  
   const [carList, setCarList] = useState<Car[]>([]);
+  const [discountList, setDiscountList] = useState<DiscountCode[]>([]);
   const [isOpen, setIsOpen] = useState(false)
+  const [total, setTotal] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [grandTotal, setGrandTotal] = useState(0)
 
   const [cartList, setCartList] = useRecoilState<CarInCart[]>(cartListState);
+
+  const calculatePrice = () => {
+    let totalPrice = 0;
+
+    cartList.forEach((carItem) => {
+      if (carItem.amountInCart && carItem.fields.price) {
+        totalPrice += carItem.amountInCart * carItem.fields.price;
+      }
+    });
+
+    const grandTotal = totalPrice - discount;
+    const grandTotalChecked = grandTotal > 0 ? grandTotal : 0;
+
+    setTotal(totalPrice);
+    setGrandTotal(grandTotalChecked);
+  }
+
+  const handleChangeDiscountCode = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    const discountAmount = discountList.reduce((totalDiscount, discountItem) => {
+      if (discountItem.fields.code === value) {
+        return totalDiscount + discountItem.fields.amount;
+      }
+
+      return totalDiscount;
+    }, 0);
+
+    setDiscount(discountAmount);
+  }
 
   const handleClickAddToCart = (carData: Car) => {
     const carId = carData.sys.id
@@ -79,21 +113,44 @@ function App() {
 
       const data = await response.json();
       setCarList(data.items)
+    } catch (error) {
+      console.error('error: ', error);
+    }
+  }
 
-      console.log(data.items);
+  const getDiscountListApi = async () => {
+    try {
+      const response = await fetch(discountListApi, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${AccessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('response not ok');
+      }
+
+      const data = await response.json();
+      setDiscountList(data.items)
     } catch (error) {
       console.error('error: ', error);
     }
   }
 
   useEffect(() => {
-    console.log(cartList)
-
-  }, [cartList])
+    getCarList();
+    getDiscountListApi();
+  }, [])
 
   useEffect(() => {
-    getCarList();
-  }, [])
+    if (isOpen) {
+      calculatePrice()
+    } else {
+      setDiscount(0);
+    }
+  }, [cartList, isOpen, discount])
 
   return (
     <div className="text-[#111827]">
@@ -183,17 +240,17 @@ function App() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-xl bg-white text-left py-4 px-5 transition-all">
+                <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-xl bg-white text-left py-4 px-5 transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-3xl font-semibold"
                   >
                     Cart
                   </Dialog.Title>
-                  <div className="flex flex-col justify-between min-h-[500px]">
-                    <div className="mt-6">
+                  <div className="flex flex-col justify-between">
+                    <div className="mt-6 flex flex-col gap-3 h-[250px] overflow-auto">
                       {cartList.map((carItem) => (
-                        <div className="flex justify-between">
+                        <div className="flex justify-between border-b pb-2">
                           <div className="flex gap-3">
                             <img
                               className="h-[54px] w-[87px] object-cover"
@@ -214,7 +271,7 @@ function App() {
                             >
                               <div className="-mt-1">+</div>
                             </button>
-                            <div>{carItem.amountInCart}</div>
+                            <div className="w-10 text-center">{carItem.amountInCart}</div>
                             <button
                               className="bg-[#3B82F6] h-6 w-6 text-white rounded-md disabled:bg-[#93C5FD] hover:bg-[#1E40AF] disabled:cursor-not-allowed hover:cursor-pointer"
                               onClick={() => handleClickDecrease(carItem)}
@@ -228,17 +285,24 @@ function App() {
                     </div>
 
                     <div className="mt-4">
+                      <div className="bg-[#F3F4F6] rounded-md w-full h-[75px] flex items-center px-5">
+                        <input
+                          className="h-[43px] w-full border px-5 border-[#D1D5DB] focus:outline-none rounded-md"
+                          placeholder="Discount code"
+                          onChange={(e) => handleChangeDiscountCode(e)}
+                        />
+                      </div>
                       <div className="flex justify-between py-1">
-                        <div>Total</div>
-                        <div>1,200 THB</div>
+                        <div className="text-xl font-bold">Total</div>
+                        <div className="text-xl">{`${total.toLocaleString()} THB`}</div>
                       </div>
                       <div className="flex justify-between py-1 border-y">
-                        <div>Discount</div>
-                        <div>1,200 THB</div>
+                        <div className="text-xl font-bold">Discount</div>
+                        <div className="text-xl">{`${discount.toLocaleString()} THB`}</div>
                       </div>
                       <div className="flex justify-between py-1">
-                        <div>Grand Total</div>
-                        <div>1,200 THB</div>
+                        <div className="text-xl font-bold">Grand Total</div>
+                        <div className="text-xl">{`${grandTotal.toLocaleString()} THB`}</div>
                       </div>
                     </div>
                   </div>

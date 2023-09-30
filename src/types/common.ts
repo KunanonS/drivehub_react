@@ -1,80 +1,119 @@
 export interface Car {
-    metadata: {
-      tags: any[];
-    };
-    sys: {
-      space: {
-        sys: {
-          type: string;
-          linkType: string;
-          id: string;
-        };
+  metadata: {
+    tags: any[];
+  };
+  sys: {
+    space: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
       };
-      id: string;
-      type: string;
-      createdAt: string;
-      updatedAt: string;
-      environment: {
-        sys: {
-          id: string;
-          type: string;
-          linkType: string;
-        };
-      };
-      revision: number;
-      contentType: {
-        sys: {
-          type: string;
-          linkType: string;
-          id: string;
-        };
-      };
-      locale: string;
     };
-    fields: {
-      title: string;
-      price: number;
-      photo: string;
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    environment: {
+      sys: {
+        id: string;
+        type: string;
+        linkType: string;
+      };
     };
-  }
+    revision: number;
+    contentType: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
+      };
+    };
+    locale: string;
+  };
+  fields: {
+    title: string;
+    price: number;
+    photo: string;
+  };
+}
 
-  export interface CarInCart {
-    metadata: {
-      tags: any[];
-    };
-    sys: {
-      space: {
-        sys: {
-          type: string;
-          linkType: string;
-          id: string;
-        };
+export interface CarInCart {
+  metadata: {
+    tags: any[];
+  };
+  sys: {
+    space: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
       };
-      id: string;
-      type: string;
-      createdAt: string;
-      updatedAt: string;
-      environment: {
-        sys: {
-          id: string;
-          type: string;
-          linkType: string;
-        };
-      };
-      revision: number;
-      contentType: {
-        sys: {
-          type: string;
-          linkType: string;
-          id: string;
-        };
-      };
-      locale: string;
     };
-    fields: {
-      title: string;
-      price: number;
-      photo: string;
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    environment: {
+      sys: {
+        id: string;
+        type: string;
+        linkType: string;
+      };
     };
-    amountInCart: number
-  }
+    revision: number;
+    contentType: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
+      };
+    };
+    locale: string;
+  };
+  fields: {
+    title: string;
+    price: number;
+    photo: string;
+  };
+  amountInCart: number
+}
+
+export interface DiscountCode {
+  metadata: {
+    tags: string[];
+  };
+  sys: {
+    space: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
+      };
+    };
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    environment: {
+      sys: {
+        id: string;
+        type: string;
+        linkType: string;
+      };
+    };
+    revision: number;
+    contentType: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
+      };
+    };
+    locale: string;
+  };
+  fields: {
+    amount: number;
+    code: string;
+  };
+}
