@@ -202,7 +202,7 @@ function App() {
       <div className="app-header shadow-lg w-full">
         <div className="flex items-center gap-1">
           <img src={logo} alt="logo" />
-          <span className="text-xl font-semibold uppercase">Drivehub</span>
+          <span className="text-lg md:text-xl font-semibold uppercase">Drivehub</span>
         </div>
         <div className="flex gap-2 cursor-pointer" onClick={() => setIsOpen(true)}>
           <div className="relative">
@@ -212,17 +212,17 @@ function App() {
           <span className="text-sm font-semibold hover:underline">{`Cart(${cartList.length})`}</span>
         </div>
       </div>
-      <div className="flex justify-between px-10 py-3">
-        <div className="text-3xl font-semibold">Car Available</div>
-        <div className="flex gap-3">
+      <div className="block md:flex justify-between px-10 py-3">
+        <div className="text-2xl md:text-3xl font-semibold">Car Available</div>
+        <div className="grid md:flex gap-3 mt-3 md:mt-0">
           <input
-            className="h-[43px] w-[250px] border px-5 border-[#D1D5DB] focus:outline-none rounded-md"
+            className="h-[43px] w-full md:w-[250px] border px-5 border-[#D1D5DB] focus:outline-none rounded-md"
             placeholder="Search Car"
             onChange={(e) => handleChangeSearchCar(e)}
           />
           <Menu as="div" className="relative inline-block text-left">
             <div>
-              <Menu.Button className="border flex items-center justify-center gap-2 h-[43px] px-5 border-[#D1D5DB] focus:outline-none rounded-md">
+              <Menu.Button className="border flex items-center w-full md:w-auto justify-center gap-2 h-[43px] px-5 border-[#D1D5DB] focus:outline-none rounded-md">
                 <img src={iconDropdown} alt="iconDropdown" />
                 {menuActive.name}
                 <img src={iconArrowDown} alt="iconArrowDown" />
@@ -275,19 +275,19 @@ function App() {
                   onClick={() => handleClickAddToCart(carItem)}
                   disabled={cartList.findIndex((car) => car.sys.id === carItem.sys.id) !== -1}
                 >
-                  Add to cart
+                  {cartList.findIndex((car) => car.sys.id === carItem.sys.id) !== -1 ? 'Added' : 'Add to cart'}
                 </button>
               </div>
             </div>
           ))}</div>
       </div>
-      <div className="app-footer">
+      <div className="app-footer grid md:flex items-center text-center md:justify-between md:h-[124px] h-[170px]">
         <div className="text-left">
           <div className="font-semibold">Drivehub Co.,Ltd</div>
           <div>193-195 Lake Rajada Office Complex,</div>
           <div>Ratchadapisek road, Khlong Toei, Bangkok</div>
         </div>
-        <div className="mt-auto">
+        <div className="text-left md:mt-auto">
           <div className="text-[#E5E7EB]">© Drivehub 2023</div>
         </div>
       </div>
@@ -324,7 +324,7 @@ function App() {
                 <Dialog.Panel className="relative w-full max-w-xl transform overflow-hidden rounded-xl bg-white text-left py-4 px-5 transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-3xl font-semibold"
+                    className="text-2xl md:text-3xl font-semibold"
                   >
                     Cart
                     <img
@@ -340,14 +340,14 @@ function App() {
                         <div className="flex justify-between border-b pb-2">
                           <div className="flex gap-3">
                             <img
-                              className="h-[54px] w-[87px] object-cover"
+                              className="h-[54px] w-[87px] object-cover hidden md:grid"
                               src={carItem.fields.photo}
                               alt={carItem.fields.title}
                               onError={(e: React.ChangeEvent<HTMLImageElement>) => {
                                 e.target.src = iconNullImage;
                               }} />
                             <div>
-                              <div className="text-xl font-bold">{carItem.fields.title}</div>
+                              <div className="md:text-xl font-bold">{carItem.fields.title}</div>
                               <div className="text-sm font-medium">{`${carItem.fields.price.toLocaleString()} THB/Day`}</div>
                             </div>
                           </div>
@@ -380,16 +380,16 @@ function App() {
                         />
                       </div>
                       <div className="flex justify-between py-1">
-                        <div className="text-xl font-bold">Total</div>
-                        <div className="text-xl">{`${total.toLocaleString()} THB`}</div>
+                        <div className="text-lg md:text-xl font-bold">Total</div>
+                        <div className="text-lg md:text-xl">{`${total.toLocaleString()} THB`}</div>
                       </div>
                       <div className="flex justify-between py-1 border-y">
-                        <div className="text-xl font-bold">Discount</div>
-                        <div className="text-xl">{`${discount.toLocaleString()} THB`}</div>
+                        <div className="text-lg md:text-xl font-bold">Discount</div>
+                        <div className="text-lg md:text-xl">{`${discount.toLocaleString()} THB`}</div>
                       </div>
                       <div className="flex justify-between py-1">
-                        <div className="text-xl font-bold">Grand Total</div>
-                        <div className="text-xl">{`${grandTotal.toLocaleString()} THB`}</div>
+                        <div className="text-lg md:text-xl font-bold">Grand Total</div>
+                        <div className="text-lg md:text-xl">{`${grandTotal.toLocaleString()} THB`}</div>
                       </div>
                     </div>
                   </div>
