@@ -1,31 +1,22 @@
 .app-footer {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  background: #0073fa;
+  background: #111827;
   color: #fff;
   text-align: center;
-  height: 80px;
+  height: 124px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 18px;
-  font-weight: 600;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 20px 40px 20px 40px;
 }
 
 .app-header {
-  background: #0073fa;
-  color: #fff;
+  color: #2a3042;
   height: 80px;
   display: flex;
   align-items: center;
   padding-left: 40px;
-}
-.app-header img {
-  height: 50px;
-}
-.app-header span {
-  font-size: 30px;
-  font-weight: 600;
+  padding-right: 40px;
+  justify-content: space-between;
 }
